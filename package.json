@@ -1,0 +1,15 @@
+{
+  "name": "samuraibs-tests",
+  "version": "1.0.0",
+  "description": "Projeto de testes de aceitação de ponta a ponta em cypress",
+  "main": "index.js",
+  "author": "Danilo Dias",
+  "license": "MIT",
+  "devDependencies": {
+    "@faker-js/faker": "^7.4.0",
+    "cypress": "^9.7.0"
+  },
+  "dependencies": {
+    "pg": "^8.7.3"
+  }
+}
