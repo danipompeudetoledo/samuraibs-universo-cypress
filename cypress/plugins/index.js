@@ -22,24 +22,20 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
-  const pool = new Pool({
-    host: 'castor.db.elephantsql.com',
-    user: 'alzyapgu',
-    password: '0ITCSsnAey2bSMYRpg1JDTZPkj9vfNtF',
-    database: 'alzyapgu',
-    port: 5432
-  })
+  const configJson = require(config.configFile)
+
+  const pool = new Pool(configJson.dbConfig)
 
   on('task', {
     removeUser(email) {
-      return new Promise(function (resolve){
+      return new Promise(function (resolve) {
         pool.query('delete from public.users where email= $1', [email], function (error, result) {
-            if (error) {
-              throw error
-            }
-            resolve({ success: result })
+          if (error) {
+            throw error
           }
-        ); 
+          resolve({ success: result })
+        }
+        );
       });
     },
   });
