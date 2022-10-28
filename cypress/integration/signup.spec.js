@@ -37,15 +37,10 @@ describe("cadastro", function () {
     };
 
     before(function () {
-      cy.task("removeUser", user.email).then(function (result) {
-        console.log(result);
-      });
+      cy.postUser(user)
 
-      cy.request("POST", "http://localhost:3333/users", user).then(function (
-        response
-      ) {
-        expect(response.status).to.eq(200);
-      });
+
+      
 
     })
     it("Não deve cadastrar o usuário", function () {
@@ -94,7 +89,7 @@ describe("cadastro", function () {
     // essa função vai percorrer pelo array de senhas
     passwords.forEach(function (p) {
       it('não deve cadastrar com a senha: ' + p, function () {
-        const user = { name: 'Jason Friday', email: 'jason@gmail.com', 'password': p}
+        const user = { name: 'Jason Friday', email: 'jason@gmail.com', 'password': p }
 
 
         signupPage.form(user)
@@ -115,22 +110,22 @@ describe("cadastro", function () {
 
   })
 
-  context('quando não preenho nenhum dos campos',function(){
+  context('quando não preenho nenhum dos campos', function () {
 
-    const alertMessages =[
+    const alertMessages = [
       'Nome é obrigatório',
       'E-mail é obrigatório',
       'Senha é obrigatória',
     ]
 
-    before(function(){
+    before(function () {
       signupPage.go()
       signupPage.submit()
     })
 
-    alertMessages.forEach(function(alert){
+    alertMessages.forEach(function (alert) {
 
-      it('deve exibir ' + alert.toLowerCase(),function(){
+      it('deve exibir ' + alert.toLowerCase(), function () {
         signupPage.alertHaveText(alert)
 
 
