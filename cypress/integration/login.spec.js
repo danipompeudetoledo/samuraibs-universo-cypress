@@ -63,7 +63,7 @@ describe('login', function () {
         })
     })
 
-    context.only('quando o formato do email é invaido', function () {
+    context('quando o formato do email é invaido', function () {
 
         const emails = [
             'papito.com.br',
@@ -76,7 +76,7 @@ describe('login', function () {
             'xpto123'
         ]
 
-        before(function(){
+        before(function () {
             loginPage.go()
         })
 
@@ -84,12 +84,35 @@ describe('login', function () {
             it('não deve logar com o email:' + email, function () {
                 const user = { email: email, password: 'pwd123' }
 
-                
+
                 loginPage.form(user)
                 loginPage.submit()
                 loginPage.alertHaveText('Informe um email válido')
             })
         })
 
+    })
+
+    context.only('quando não preenho nenhum dos campos', function () {
+
+        const alertMessages = [
+            'E-mail é obrigatório',
+            'Senha é obrigatória',
+        ]
+
+        before(function () {
+            loginPage.go()
+            loginPage.submit()
+        })
+
+        alertMessages.forEach(function (alert) {
+
+            it('deve exibir ' + alert.toLowerCase(), function () {
+                loginPage.alertHaveText(alert)
+
+
+            })
+
+        })
     })
 })
