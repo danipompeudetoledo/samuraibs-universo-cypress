@@ -2,17 +2,21 @@ import signupPage from '../support/pages/signup'
 
 
 describe("cadastro", function () {
-  context("Quando o usuario é novato", function () {
-    // definindo a massa de testes
-    const user = {
-      name: "Danilo",
-      email: "dani@gmail.com",
-      password: "pwd123",
-    };
 
+  before(function(){
+    cy.fixture('papito').then(function(papito){
+      this.papito = papito
+
+    })
+
+  })
+
+
+  context.only("Quando o usuario é novato", function () {
+   
     before(function () {
       // removendo o usuario para que a massa seja sempre válida
-      cy.task("removeUser", user.email)
+      cy.task("removeUser", this.papito.email)
         .then(function (result) {
           console.log(result);
         });
@@ -20,7 +24,7 @@ describe("cadastro", function () {
 
     it("Deve cadastrar com sucesso ", function () {
       signupPage.go()
-      signupPage.form(user)
+      signupPage.form(this.papito)
       signupPage.submit()
       signupPage.toast.shouldtHaveText('Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!')
 
@@ -68,7 +72,7 @@ describe("cadastro", function () {
       signupPage.go()
       signupPage.form(user)
       signupPage.submit()
-      signupPage.alertHaveText('Informe um email válido')
+      signupPage.alert.haveText('Informe um email válido')
 
 
     })
@@ -100,7 +104,7 @@ describe("cadastro", function () {
     })
 
     afterEach(function () {
-      signupPage.alertHaveText('Pelo menos 6 caracteres')
+      signupPage.alert.haveText('Pelo menos 6 caracteres')
 
     })
 
@@ -126,7 +130,7 @@ describe("cadastro", function () {
     alertMessages.forEach(function (alert) {
 
       it('deve exibir ' + alert.toLowerCase(), function () {
-        signupPage.alertHaveText(alert)
+        signupPage.alert.haveText(alert)
 
 
       })
