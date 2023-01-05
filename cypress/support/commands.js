@@ -33,10 +33,11 @@ Cypress.Commands.add('postUser', function (user) {
         })
 
 
-    cy.request("POST",
-        "http://localhost:3333/users",
-        user)
-        .then(function (response) {
+    cy.request(
+        'POST',
+        'http://localhost:3333/users',
+        user
+        ).then(function (response) {
             expect(response.status).to.eq(200);
         });
 
